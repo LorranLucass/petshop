@@ -8,6 +8,7 @@ import {
   Provider as PaperProvider,
   MD3DarkTheme as PaperDarkTheme,
   MD3LightTheme as PaperDefaultTheme,
+  useTheme,
 } from 'react-native-paper';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -22,24 +23,19 @@ import AddProductScreen from './screens/AddProductScreen';
 import EditProductScreen from './screens/EditProductScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
-// Removi import NewsScreen
-
 import { ThemeProvider, ThemeContext } from './screens/ThemeContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const primaryColor = '#00A86B';   // Verde clássico petshop famoso
-const secondaryColor = '#FFFFFF'; // Branco para textos e ícones selecionados
-const backgroundColor = '#F0F0F0'; // Cinza claro de fundo das abas
-const inactiveColor = '#8e8e93';  // Cinza para ícones inativos
-
 function PetsStack() {
+  const theme = useTheme();
+
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: primaryColor },
-        headerTintColor: secondaryColor,
+        headerStyle: { backgroundColor: theme.colors.primary },
+        headerTintColor: theme.colors.onPrimary || '#fff',
       }}
     >
       <Stack.Screen name="PetsList" component={PetsScreen} options={{ title: 'Meus Pets' }} />
@@ -50,11 +46,13 @@ function PetsStack() {
 }
 
 function ProductsStack() {
+  const theme = useTheme();
+
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: primaryColor },
-        headerTintColor: secondaryColor,
+        headerStyle: { backgroundColor: theme.colors.primary },
+        headerTintColor: theme.colors.onPrimary || '#fff',
       }}
     >
       <Stack.Screen name="ProductsList" component={ProductsScreen} options={{ title: 'Produtos' }} />
@@ -65,19 +63,20 @@ function ProductsStack() {
 }
 
 function MainTabs() {
+  const theme = useTheme();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarActiveTintColor: primaryColor,
-        tabBarInactiveTintColor: inactiveColor,
-        tabBarStyle: { backgroundColor: backgroundColor },
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.onSurfaceVariant || 'gray',
+        tabBarStyle: { backgroundColor: theme.colors.background },
         tabBarIcon: ({ color, size }) => {
           let iconName;
           if (route.name === 'Home') iconName = 'home';
           else if (route.name === 'Pets') iconName = 'dog';
           else if (route.name === 'Products') iconName = 'shopping';
-          // Removi linha do ícone News
           else if (route.name === 'Settings') iconName = 'cog';
           return <MaterialCommunityIcons name={iconName} color={color} size={size} />;
         },
@@ -86,7 +85,6 @@ function MainTabs() {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Pets" component={PetsStack} />
       <Tab.Screen name="Products" component={ProductsStack} />
-      {/* Removi Tab.Screen News */}
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
@@ -99,11 +97,8 @@ function AppContent() {
     ...PaperDefaultTheme,
     colors: {
       ...PaperDefaultTheme.colors,
-      primary: primaryColor,
-      onPrimary: secondaryColor,
-      background: '#fff',
-      surface: '#fff',
-      text: '#000',
+      primary: '#00A86B',
+      onPrimary: '#FFFFFF',
     },
   };
 
@@ -111,12 +106,12 @@ function AppContent() {
     ...NavigationDefaultTheme,
     colors: {
       ...NavigationDefaultTheme.colors,
-      primary: primaryColor,
+      primary: '#00A86B',
       background: '#fff',
-      card: primaryColor,
-      text: secondaryColor,
+      card: '#00A86B',
+      text: '#FFFFFF',
       border: '#ddd',
-      notification: primaryColor,
+      notification: '#00A86B',
     },
   };
 

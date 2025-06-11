@@ -6,20 +6,17 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Dados iniciais para produtos
 let products = [
   { id: 1, name: 'Ração Premium', price: 120.0, description: 'Alimento balanceado para cães e gatos' },
   { id: 2, name: 'Coleira Azul', price: 45.5, description: 'Coleira confortável e resistente' },
   { id: 3, name: 'Brinquedo Bola', price: 25.0, description: 'Bola para pet brincar' },
 ];
 
-// Dados iniciais para pets
 let pets = [
   { id: 1, name: 'Rex', type: 'Cachorro', age: 4 },
   { id: 2, name: 'Mimi', type: 'Gato', age: 2 },
 ];
 
-// Rotas Products
 app.get('/products', (req, res) => {
   res.json(products);
 });
@@ -65,7 +62,6 @@ app.delete('/products/:id', (req, res) => {
   res.status(204).send();
 });
 
-// Rotas Pets
 app.get('/pets', (req, res) => {
   res.json(pets);
 });
@@ -111,7 +107,6 @@ app.delete('/pets/:id', (req, res) => {
   res.status(204).send();
 });
 
-// Escutando em todas as interfaces para aceitar conexões da rede local
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`API rodando em http://192.168.0.158:${PORT}`);
+  console.log(`API rodando em http://192.168.1.50:${PORT}`);
 });

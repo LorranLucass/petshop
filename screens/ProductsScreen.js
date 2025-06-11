@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native'; 
-import { Appbar, Card, Text, FAB, IconButton } from 'react-native-paper';
+import { Card, Text, FAB, IconButton } from 'react-native-paper';
 import { getProductsAPI, deleteProductAPI } from '../services/api';
 
 export default function ProductsScreen({ navigation }) {
@@ -47,59 +47,53 @@ export default function ProductsScreen({ navigation }) {
   }, [navigation]);
 
   return (
-    <>
-      <Appbar.Header>
-        <Appbar.Content title="Produtos" />
-      </Appbar.Header>
-
-      <View style={{ flex: 1, padding: 16 }}>
-        {loading ? (
-          <ActivityIndicator size="large" />
-        ) : (
-          <FlatList
-            data={products}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity 
-                onPress={() => navigation.navigate('EditProduct', { productId: item.id })}
-                activeOpacity={0.7}
-              >
-                <Card style={{ marginBottom: 12 }}>
-                  <Card.Title 
-                    title={item.name} 
-                    subtitle={`R$ ${item.price.toFixed(2)}`} 
-                    right={(props) => (
-                      <IconButton 
-                        {...props}
-                        icon="delete" 
-                        onPress={(e) => {
-                          e.stopPropagation(); // evita disparar o onPress do card
-                          handleDeleteProduct(item.id);
-                        }} 
-                      />
-                    )}
-                  />
-                  <Card.Content>
-                    <Text>{item.description}</Text>
-                  </Card.Content>
-                </Card>
-              </TouchableOpacity>
-            )}
-          />
-        )}
-
-        <FAB
-          icon="plus"
-          label="Adicionar Produto"
-          onPress={() => navigation.navigate('AddProduct')}
-          style={{
-            position: 'absolute',
-            margin: 16,
-            right: 0,
-            bottom: 0,
-          }}
+    <View style={{ flex: 1, padding: 16 }}>
+      {loading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <FlatList
+          data={products}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity 
+              onPress={() => navigation.navigate('EditProduct', { productId: item.id })}
+              activeOpacity={0.7}
+            >
+              <Card style={{ marginBottom: 12 }}>
+                <Card.Title 
+                  title={item.name} 
+                  subtitle={`R$ ${item.price.toFixed(2)}`} 
+                  right={(props) => (
+                    <IconButton 
+                      {...props}
+                      icon="delete" 
+                      onPress={(e) => {
+                        e.stopPropagation(); // evita disparar o onPress do card
+                        handleDeleteProduct(item.id);
+                      }} 
+                    />
+                  )}
+                />
+                <Card.Content>
+                  <Text>{item.description}</Text>
+                </Card.Content>
+              </Card>
+            </TouchableOpacity>
+          )}
         />
-      </View>
-    </>
+      )}
+
+      <FAB
+        icon="plus"
+        label="Adicionar Produto"
+        onPress={() => navigation.navigate('AddProduct')}
+        style={{
+          position: 'absolute',
+          margin: 16,
+          right: 0,
+          bottom: 0,
+        }}
+      />
+    </View>
   );
 }

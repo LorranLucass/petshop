@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, RefreshControl, StyleSheet } from 'react-native';
-import { Appbar, Card, Paragraph, ActivityIndicator, Button } from 'react-native-paper';
+import { Appbar, Card, Paragraph, ActivityIndicator, Button, List } from 'react-native-paper';
 
 export default function HomeScreen({ navigation }) {
-  const [quote, setQuote] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Como a frase é fixa, não precisa buscar da API, só simula loading
   async function fetchQuote() {
     setLoading(true);
-    try {
-      const res = await fetch('https://zenquotes.io/api/today');
-      const data = await res.json();
-      setQuote(data[0].q + ' — ' + data[0].a);
-    } catch (e) {
-      setQuote('Não foi possível carregar a frase do dia.');
-    }
+    // Simula um pequeno delay para efeito de loading
+    await new Promise(resolve => setTimeout(resolve, 500));
     setLoading(false);
   }
 
   useEffect(() => {
     fetchQuote();
   }, []);
+
+  const quote = "Cuidar de um pet é aprender a amar incondicionalmente todos os dias.";
 
   return (
     <>
@@ -34,6 +31,7 @@ export default function HomeScreen({ navigation }) {
           <RefreshControl refreshing={loading} onRefresh={fetchQuote} />
         }
       >
+        {/* Card Frase Motivacional */}
         <Card style={styles.card}>
           <Card.Title title="Frase Motivacional do Dia" />
           <Card.Content>
@@ -45,6 +43,7 @@ export default function HomeScreen({ navigation }) {
           </Card.Content>
         </Card>
 
+        {/* Card Acesso Rápido */}
         <Card style={styles.card}>
           <Card.Cover source={{ uri: 'https://placedog.net/640/480?id=1' }} />
           <Card.Title title="Acesso Rápido" subtitle="Gerencie seu PetShop" />
@@ -56,6 +55,36 @@ export default function HomeScreen({ navigation }) {
             <Button onPress={() => navigation.navigate('Products')}>Ver Produtos</Button>
           </Card.Actions>
         </Card>
+
+        {/* Card Dicas para seu Pet */}
+        <Card style={styles.card}>
+          <Card.Title title="Dicas para seu Pet" />
+          <Card.Content>
+            <List.Section>
+              <List.Item
+                title="Alimente seu pet com ração adequada"
+                left={props => <List.Icon {...props} icon="food" />}
+              />
+              <List.Item
+                title="Mantenha a vacinação em dia"
+                left={props => <List.Icon {...props} icon="needle" />}
+              />
+              <List.Item
+                title="Leve-o para passear diariamente"
+                left={props => <List.Icon {...props} icon="walk" />}
+              />
+              <List.Item
+                title="Ofereça bastante água fresca"
+                left={props => <List.Icon {...props} icon="water" />}
+              />
+              <List.Item
+                title="Faça visitas regulares ao veterinário"
+                left={props => <List.Icon {...props} icon="stethoscope" />}
+              />
+            </List.Section>
+          </Card.Content>
+        </Card>
+
       </ScrollView>
     </>
   );

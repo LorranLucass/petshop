@@ -1,4 +1,4 @@
-const API_BASE = 'http://192.168.0.158:3000';  // seu IP e porta do backend
+const API_BASE = 'http://192.168.1.50:3000';  // seu IP e porta do backend
 
 export async function getProductsAPI() {
   try {

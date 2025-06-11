@@ -14,7 +14,6 @@ import PetsScreen from '../screens/PetsScreen';
 import AddPetScreen from '../screens/AddPetScreen';
 import EditPetScreen from '../screens/EditPetScreen';
 
-// Removida a importação de NewsScreen
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -82,7 +81,7 @@ export default function MainTabs() {
           if (route.name === 'Produtos') iconName = 'cart-outline';
           else if (route.name === 'Clientes') iconName = 'account-group-outline';
           else if (route.name === 'Pets') iconName = 'dog';
-          else iconName = 'help-circle-outline'; // fallback seguro
+          else iconName = 'help-circle-outline';
 
           return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
         },
@@ -91,7 +90,6 @@ export default function MainTabs() {
       <Tab.Screen name="Produtos" component={ProductsStack} />
       <Tab.Screen name="Clientes" component={ClientsStack} />
       <Tab.Screen name="Pets" component={PetsStack} />
-      {/* Aba Noticias removida */}
     </Tab.Navigator>
   );
 }

@@ -19,7 +19,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Stack Produtos
 function ProductsStack() {
   return (
     <Stack.Navigator>
@@ -30,7 +29,6 @@ function ProductsStack() {
   );
 }
 
-// Stack Clientes
 function ClientsStack() {
   return (
     <Stack.Navigator>
@@ -41,7 +39,6 @@ function ClientsStack() {
   );
 }
 
-// Stack Pets
 function PetsStack() {
   return (
     <Stack.Navigator>
@@ -52,7 +49,6 @@ function PetsStack() {
   );
 }
 
-// Navegação principal com Tabs
 export default function MainTabs() {
   return (
     <Tab.Navigator
